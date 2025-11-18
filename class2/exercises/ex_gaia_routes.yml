@@ -1,0 +1,28 @@
+---
+# Use 'check_point.gaia.cp_gaia_routes_facts' to retrieve the Gaia routing table.
+#
+# Use 'debug' and 'set_fact' to extract the routes from the routing table.
+#
+# Use 'set_fact' to retrieve the default route and its corresponding 'gateways' 
+# information.
+#
+# Use 'debug' to print the prefix and next_hop out.
+- name: Routes
+  hosts: gaia
+  gather_facts: false
+  tasks:
+    - name: Routes
+      check_point.gaia.cp_gaia_routes_facts:
+      register: result
+
+    - ansible.builtin.set_fact:
+        route_table: "{{ result.ansible_facts.objects }}"
+
+    - ansible.builtin.set_fact:
+        prefix: "{{ route_table[0].address }}"
+        next_hop: "{{ route_table[0].next_hop.gateways }}"
+
+    - ansible.builtin.debug:
+        msg: |
+          "Prefix: {{ prefix }}"
+          "Next Hop: {{ next_hop }}"

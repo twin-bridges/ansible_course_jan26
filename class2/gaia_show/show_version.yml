@@ -1,0 +1,11 @@
+---
+- name: Basic Gaia Playbook
+  hosts: gaia
+  gather_facts: false
+  tasks:
+    - name: Show Version
+      check_point.gaia.cp_gaia_version_facts:
+      register: result
+
+    - ansible.builtin.debug:
+        var: result

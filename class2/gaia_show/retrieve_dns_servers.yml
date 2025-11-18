@@ -1,0 +1,11 @@
+---
+- name: Gaia DNS facts
+  hosts: gaia
+  gather_facts: false
+  tasks:
+    - name: Get Gaia DNS
+      check_point.gaia.cp_gaia_dns_facts:
+      register: result
+
+    - ansible.builtin.debug:
+        var: result

@@ -1,0 +1,11 @@
+---
+- name: Physical Interfaces
+  hosts: gaia
+  gather_facts: false
+  tasks:
+    - name: Get physical interfaces
+      check_point.gaia.cp_gaia_physical_interfaces_facts:
+      register: result
+
+    - ansible.builtin.debug:
+        var: result
