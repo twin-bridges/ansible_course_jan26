@@ -1,0 +1,21 @@
+---
+- name: Get 'mgmt' info
+  hosts: mgmt
+  gather_facts: false
+  tasks:
+    - name: Retrieve Gateway Information
+      check_point.mgmt.cp_mgmt_show_gateways_and_servers:
+      register: gw_info
+
+    - name: Retrieve gw_name
+      ansible.builtin.set_fact:
+        gw_name: "{{ gw_info['show-gateways-and-servers']['objects'][0]['name'] }}"
+
+    - name: Retrieve uid
+      ansible.builtin.set_fact:
+        gw_uid: "{{ gw_info['show-gateways-and-servers']['objects'][0]['uid'] }}"
+
+    - name: Display gw_name and gw_uid
+      ansible.builtin.debug:
+        msg: |
+          {{ gw_name }} - {{ gw_uid }}

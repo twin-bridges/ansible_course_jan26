@@ -1,0 +1,12 @@
+---
+- name: Host objects
+  hosts: mgmt
+  gather_facts: false
+  tasks:
+    - name: Get host objects
+      check_point.mgmt.cp_mgmt_host_facts:
+      register: output
+      
+    - name: Display host objects
+      ansible.builtin.debug:
+        var: output

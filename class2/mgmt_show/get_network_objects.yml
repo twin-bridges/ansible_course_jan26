@@ -1,0 +1,12 @@
+---
+- name: Network objects
+  hosts: mgmt
+  gather_facts: false
+  tasks:
+    - name: Retrieve network objects
+      check_point.mgmt.cp_mgmt_network_facts:
+      register: output
+      
+    - name: Display network objects
+      ansible.builtin.debug:
+        var: output
