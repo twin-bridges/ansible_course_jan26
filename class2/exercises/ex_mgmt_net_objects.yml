@@ -1,0 +1,28 @@
+---
+"""
+Use cp_mgmt_network_facts and then debug/set_fact to extract information
+from the result.
+"""
+- name: Network objects
+  hosts: mgmt
+  gather_facts: false
+  tasks:
+    - name: Retrieve network objects
+      check_point.mgmt.cp_mgmt_network_facts:
+      register: output
+      
+    - name: Retrieve default office address pool
+      ansible.builtin.set_fact:
+        office_pool: "{{ output.ansible_facts.networks.objects[0] }}"
+
+    - name: Retreive object details
+      ansible.builtin.set_fact:
+        obj_name: "{{ office_pool.name }}"
+        network: "{{ office_pool.subnet4 }}"
+        mask: "{{ office_pool['subnet-mask'] }}"
+
+    - name: Print object info
+      ansible.builtin.debug:
+        msg: |
+          "Name: {{ obj_name }}"
+          "Network: {{ network }}/{{ mask }}"
