@@ -1,0 +1,13 @@
+---
+- name: Testing a loop
+  hosts: gaia
+  gather_facts: false
+  tasks:
+    - name: Print Message
+      ansible.builtin.debug:
+        msg: "IP Address: {{ item }}"
+      loop:
+        - 10.1.1.1
+        - 10.1.1.2
+        - 10.1.1.3
+        - 10.1.1.4

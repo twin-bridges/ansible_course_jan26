@@ -1,0 +1,13 @@
+---
+- key: fw1
+  value:
+    device_type: checkpoint_gaia
+    host: fw1.lasthop.io
+    username: pyclass
+    password: invalid
+- key: fw2
+  value:
+    device_type: checkpoint_gaia
+    host: fw2.lasthop.io
+    username: pyclass
+    password: invalid

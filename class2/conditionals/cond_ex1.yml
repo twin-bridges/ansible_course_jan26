@@ -1,0 +1,9 @@
+---
+- name: Testing Conditionals
+  hosts: gaia
+  gather_facts: false
+  tasks:
+    - name: Print Message
+      ansible.builtin.debug:
+        msg: Hello World
+      when: true
