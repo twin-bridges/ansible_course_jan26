@@ -1,0 +1,26 @@
+---
+- name: Add Smart Console and Ansible Host Objects
+  hosts: mgmt
+  gather_facts: false
+  tasks:
+    - check_point.mgmt.cp_mgmt_host:
+        name: Windows SmartConsole
+        ipv4_address: 172.31.12.101
+        color: red
+      notify: FW Publish
+
+    - check_point.mgmt.cp_mgmt_host:
+        name: Windows SmartConsole Public
+        ipv4_address: 3.71.9.240
+        color: red
+      notify: FW Publish
+
+    - check_point.mgmt.cp_mgmt_host:
+        name: Ansible Server
+        ipv4_address: 13.56.234.189
+        color: black
+      notify: FW Publish
+
+  handlers:
+    - name: FW Publish
+      check_point.mgmt.cp_mgmt_publish:      
