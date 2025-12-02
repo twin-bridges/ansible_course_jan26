@@ -1,3 +1,4 @@
+---
 - name: Gaia Save Config
   check_point.gaia.cp_gaia_run_script:
     script: clish -c "save config"
