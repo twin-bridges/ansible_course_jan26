@@ -1,2 +1,0 @@
-- name: FW Publish
-  check_point.mgmt.cp_mgmt_publish:

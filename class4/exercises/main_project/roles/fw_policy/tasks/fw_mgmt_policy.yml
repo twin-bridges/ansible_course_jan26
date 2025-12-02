@@ -1,5 +1,4 @@
 ---
-
 - name: Firewall management (ansible)
   check_point.mgmt.cp_mgmt_access_rule:
     layer: "Network"
