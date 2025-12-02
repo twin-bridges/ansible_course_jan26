@@ -3,22 +3,27 @@
   check_point.mgmt.cp_mgmt_access_rule:
     layer: "Network"
     name: "Ansible Management Access"
-    source: Ansible Server
+    source:
+      - Ansible Server
     destination:
-      - "{{ fw_name }}" 
+      - "{{ fw_name }}"
     service: Any
     action: "Accept"
     position: 1
   notify:
-    - Publish
+    - FW Publish
     - Install Policy
 
-  handlers:
-    - name: Publish
-      check_point.mgmt.cp_mgmt_publish:
-
-    - name: Install Policy
-      check_point.mgmt.cp_mgmt_install_policy:
-        policy_package: "Standard"
-        targets:
-          - "{{ fw_name }}"
+- name: SSH Access to FW
+  check_point.mgmt.cp_mgmt_access_rule:
+    layer: "Network"
+    name: "SSH Access"
+    source: Any
+    destination:
+      - "{{ fw_name }}"
+    service: SSH
+    action: "Accept"
+    position: 2
+  notify:
+    - FW Publish
+    - Install Policy

@@ -5,3 +5,10 @@
 
 - name: FW Publish
   check_point.mgmt.cp_mgmt_publish:
+
+- name: Install Policy
+  check_point.mgmt.cp_mgmt_install_policy:
+    policy_package: "Standard"
+    targets:
+      - "{{ fw_name }}"
+

@@ -1,7 +1,3 @@
 ---
-- name: Management Host Objects
-  ansible.builtin.import_tasks: host_mgmt_objects.yml
-- name: Mgmt Network Objects
-  ansible.builtin.import_tasks: net_objects.yml
-- name: DMZ Web Server
-  ansible.builtin.import_tasks: dmz.yml
+- name: Firewall Management Rules
+  ansible.builtin.import_tasks: fw_mgmt_policy.yml
