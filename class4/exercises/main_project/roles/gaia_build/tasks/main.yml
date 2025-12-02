@@ -1,0 +1,2 @@
+- import_tasks: dns.yml
+#- import_tasks: static_routes.yml
