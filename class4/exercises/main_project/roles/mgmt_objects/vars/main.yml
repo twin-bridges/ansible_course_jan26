@@ -1,0 +1,26 @@
+mgmt_objects_hq_nets:
+  - {name: hq_net_128, network: 172.31.128.0, mask: 24}
+  - {name: hq_net_129, network: 172.31.129.0, mask: 24}
+  - {name: hq_net_130, network: 172.31.130.0, mask: 24}
+  - {name: hq_net_131, network: 172.31.131.0, mask: 24}
+  - {name: hq_net_132, network: 172.31.132.0, mask: 24}
+  - {name: hq_net_133, network: 172.31.133.0, mask: 24}
+  - {name: hq_net_134, network: 172.31.134.0, mask: 24}
+  - {name: hq_net_135, network: 172.31.135.0, mask: 24}
+
+mgmt_objects_ansible_server:
+  name: Ansible Server
+  ipv4_address: 13.56.234.189
+
+mgmt_objects_smart_console:
+  name: Windows SmartConsole
+  ipv4_address: 172.31.12.101
+  
+mgmt_objects_smart_console_public:
+  name: Windows SmartConsole Public
+  ipv4_address: 3.71.9.240
+
+mgmt_objects_fw_mgmt:
+  - "{{ mgmt_objects_ansible_server }}"
+  - "{{ mgmt_objects_smart_console }}"
+  - "{{ mgmt_objects_smart_console_public }}"

@@ -1,0 +1,14 @@
+---
+- name: Configure HQ Network Objects
+  check_point.mgmt.cp_mgmt_network:
+    name: "{{ item.name }}"
+    subnet: "{{ item.network }}"
+    mask_length: "{{ item.mask }}"
+    color: blue
+    nat_settings:
+      auto_rule: true
+      method: "hide"
+      hide_behind: "gateway"
+    state: "present"
+  loop: "{{ mgmt_objects_hq_nets }}"
+  notify: FW Publish

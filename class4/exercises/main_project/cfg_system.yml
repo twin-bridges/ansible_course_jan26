@@ -6,3 +6,13 @@
     - name: Gaia Tasks (DNS and Routes)
       ansible.builtin.import_role:
         name: gaia_build
+  tags: gaia_tasks
+
+- name: Mgmt Tasks (Configure Objects)
+  hosts: mgmt
+  gather_facts: false
+  tasks:
+    - name: Network Objects
+      ansible.builtin.import_role:
+        name: mgmt_objects
+  tags: mgmt_tasks
