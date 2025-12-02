@@ -1,0 +1,9 @@
+---
+- name: Add Static Routes (Gaia)
+  check_point.gaia.cp_gaia_static_route:
+    address: "{{ item.destination }}"
+    mask_length: "{{ item.mask }}"
+    type: gateway
+    next_hop: [{"gateway": "{{ item.next_hop }}", "priority": 1}]
+    state: present
+  loop: "{{ gaia_build_static_routes }}"
