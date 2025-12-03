@@ -1,16 +1,6 @@
 1a. Create an Ansible playbook with a single play and a single task. The play should execute against the 'local' group. The
 task should use the "debug" module to print out a message.
 
-```yaml
----
-- name: First playbook
-  hosts: local
-  tasks:
-    - name: Task1
-      ansible.builtin.debug:
-        msg: Hello world
-```
-
 1b. Execute your playbook and verify it executes correctly.
 
 ```bash
