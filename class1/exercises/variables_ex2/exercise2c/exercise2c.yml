@@ -1,8 +1,10 @@
 ---
 - name: Exercise 2c
-  hosts: cisco
-  gather_facts: False
+  hosts: gaia
+  gather_facts: false
   tasks:
-    - name: Print BGP ASN for cisco hosts
+    - name: Print 'dns1' and 'eth1' IP address for gaia hosts
       ansible.builtin.debug:
-        msg: "The ASN for host {{ inventory_hostname }} is {{ bgp_asn }}, the router-id is {{ bgp_router_id }}"
+        msg: |
+          "Primary DNS for host {{ inventory_hostname }} is {{ dns1 }}"
+          "The 'eth1' interface IP (fictional) is {{ eth1 }}"

@@ -72,30 +72,46 @@ pod4-gaia                  : ok=1    changed=0    unreachable=0    failed=0    s
 pod5-gaia                  : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 ```
 
-2c. Create the following subdirectories: pod1-gaia, pod2-gaia, pod6-gaia (inside the host_vars directory). The "host_vars/pod5-gaia" subdirectory should already exist. 
+2c. Create the following subdirectories: pod1-gaia, pod2-gaia, pod3-gaia, pod4-gaia (inside the host_vars directory). The "host_vars/pod5-gaia" subdirectory should already exist. 
 
 Note, the directory names must exactly match the Ansible "inventory_hostname". 
 
 In each of these podX-gaia directories create a file named "ip_addresses.yml". Inside this file create a "eth1" variable and assign this variable a unique IPv4 address (for example, 1.1.1.1 for pod1-gaia).
 
----- HERE -----
-
-Inside the same ciscoX directory, create a second file named "dns.yml". In this file create a variable "bgp_router_id" and assign it a value of the "loopback0" variable you just created (remember your  "{{ loopback0 }}" notation). The "cisco5" bgp.yml file should contain both the "bgp_asn" and the "bgp_router_id".
+Inside "pod5-gaia" directory, ensure the file named "dns.yml" exists and assigns "dns1" a value of "8.8.8.8". The rest of the "podX-gaia" hosts should rely on the groups_vars/gaia/dns.yml entry (which should assign "dns1" a value of "172.31.0.2"). The "pod5-gaia" should also have a file "ip_addresses.yml" with an entry for "eth1" (once again "eth1" should be assigned a unique, fictional IPv4 address).
 
 Finally, modify your Playbook such that your output looks similar to the following.
-TASK [Print BGP ASN for cisco hosts] **************************************************************************************************
-ok: [cisco2] => {
-    "msg": "The ASN for host cisco2 is 65001, the router-id is 2.2.2.2"
+
+```bash
+$ ansible-playbook exercise2c.yml 
+
+PLAY [Exercise 2c] ********************************************************************
+
+TASK [Print 'dns1' and 'eth1' IP address for gaia hosts] ******************************
+ok: [pod1-gaia] => {
+    "msg": "\"Primary DNS for host pod1-gaia is 172.31.0.2\"\n\"The 'eth1' interface IP (fictional) is 1.1.1.1\"\n"
 }
-ok: [cisco1] => {
-    "msg": "The ASN for host cisco1 is 65001, the router-id is 1.1.1.1"
+ok: [pod4-gaia] => {
+    "msg": "\"Primary DNS for host pod4-gaia is 172.31.0.2\"\n\"The 'eth1' interface IP (fictional) is 4.4.4.4\"\n"
 }
-ok: [cisco6] => {
-    "msg": "The ASN for host cisco6 is 65001, the router-id is 6.6.6.6"
+ok: [pod5-gaia] => {
+    "msg": "\"Primary DNS for host pod5-gaia is 8.8.8.8\"\n\"The 'eth1' interface IP (fictional) is 5.5.5.5\"\n"
 }
-ok: [cisco5] => {
-    "msg": "The ASN for host cisco5 is 65535, the router-id is 5.5.5.5"
+ok: [pod2-gaia] => {
+    "msg": "\"Primary DNS for host pod2-gaia is 172.31.0.2\"\n\"The 'eth1' interface IP (fictional) is 2.2.2.2\"\n"
+}
+ok: [pod3-gaia] => {
+    "msg": "\"Primary DNS for host pod3-gaia is 172.31.0.2\"\n\"The 'eth1' interface IP (fictional) is 3.3.3.3\"\n"
 }
 
-The above exercise demonstrates that you can store additional inventory variables in host_vars, and group_vars. These subdirectories also allow you to divide your YAML into multiple files which can simplify inventory management.
+PLAY RECAP ****************************************************************************
+pod1-gaia   : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+pod2-gaia   : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+pod3-gaia   : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+pod4-gaia   : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+pod5-gaia   : ok=1    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+```
+
+Which of the above variables are being pulled from group_vars versus host_vars? If there is a conflict between group_vars and host_vars which variable wins?
+
 
