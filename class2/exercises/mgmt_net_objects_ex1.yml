@@ -1,8 +1,6 @@
 ---
-"""
-Use cp_mgmt_network_facts and then debug/set_fact to extract information
-from the result.
-"""
+# Use cp_mgmt_network_facts and then debug/set_fact to extract information
+# from the result.
 - name: Network objects
   hosts: mgmt
   gather_facts: false
