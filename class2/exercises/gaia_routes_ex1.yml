@@ -1,0 +1,23 @@
+---
+- name: Inspect Routes
+  hosts: gaia
+  gather_facts: false
+  tasks:
+    - name: Inspect Routes
+      check_point.gaia.cp_gaia_routes_facts:
+      register: result
+
+    - name: Extract the route_table
+      ansible.builtin.set_fact:
+        route_table: "{{ result.ansible_facts.objects }}"
+
+    - name: Create prefix and next_hop variables from route_table (default route)
+      ansible.builtin.set_fact:
+        prefix: "{{ route_table[0].address }}"
+        next_hop: "{{ route_table[0].next_hop.gateways }}"
+
+    - name: Display prefix and next_hop variables for the default route
+      ansible.builtin.debug:
+        msg: |
+          "Prefix: {{ prefix }}"
+          "Next Hop: {{ next_hop }}"
