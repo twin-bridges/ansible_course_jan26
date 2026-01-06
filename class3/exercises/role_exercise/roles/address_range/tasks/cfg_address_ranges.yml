@@ -1,0 +1,9 @@
+---
+- name: Add address ranges
+  check_point.mgmt.cp_mgmt_address_range:
+    color: dark green
+    ip_address_first: "{{ item.ip_address_first }}"
+    ip_address_last: "{{ item.ip_address_last }}"
+    name: "{{ item.name }}"
+    state: present
+  loop: "{{ address_range_test_ranges }}"

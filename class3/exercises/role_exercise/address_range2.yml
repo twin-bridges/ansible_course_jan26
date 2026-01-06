@@ -1,0 +1,8 @@
+---
+- name: Configure and display address ranges
+  hosts: mgmt
+  gather_facts: false
+  tasks:
+    - name: Execute address range role
+      ansible.builtin.import_role:
+        name: address_range

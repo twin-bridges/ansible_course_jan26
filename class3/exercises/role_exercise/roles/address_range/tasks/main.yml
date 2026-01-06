@@ -1,0 +1,5 @@
+---
+- name: Configure Address Ranges
+  ansible.builtin.import_tasks: cfg_address_ranges.yml
+- name: Display Address Ranges
+  ansible.builtin.import_tasks: display_address_ranges.yml

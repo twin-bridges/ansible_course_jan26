@@ -1,0 +1,8 @@
+---
+- name: Get address range objects
+  check_point.mgmt.cp_mgmt_address_range_facts:
+  register: address_range_out
+
+- name: Display address range objects
+  ansible.builtin.debug:
+    var: address_range_out
