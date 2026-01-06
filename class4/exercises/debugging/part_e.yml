@@ -1,0 +1,13 @@
+---
+
+- name: Debugging part a (here there be errors).
+  hosts: mgmt
+  gather_facts: false
+  tasks:
+    - name: Retrieve network objects
+      checkpoint.mgmt.cp_mgmt_network_facts:
+      register: output
+
+    - name: Show network objects
+      ansible.builtin.debug:
+        msg: "{{ output }}"

@@ -1,0 +1,8 @@
+---
+- name: Debugging part a (here there be errors).
+  hosts: mgmt
+  gather_facts: false
+  tasks:
+    name: Retrieve network objects
+    check_point.mgmt.cp_mgmt_network_facts:
+    register: output
