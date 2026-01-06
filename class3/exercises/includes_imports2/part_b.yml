@@ -1,0 +1,9 @@
+---
+- name: Import part b
+  hosts: localhost
+  vars:
+    my_tasks_alt: subtask1.yml
+  tasks:
+    - name: Import and variables
+      # ansible.builtin.import_tasks: "{{ my_tasks }}"    ### Will fail
+      ansible.builtin.import_tasks: "{{ my_tasks_alt }}"

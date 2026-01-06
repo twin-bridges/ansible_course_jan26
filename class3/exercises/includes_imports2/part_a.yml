@@ -1,0 +1,6 @@
+---
+- name: Import part a
+  hosts: localhost
+  tasks:
+    - name: Loops and import
+      ansible.builtin.import_tasks: subtask1.yml
