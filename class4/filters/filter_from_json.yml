@@ -1,0 +1,18 @@
+---
+- name: Testing from_json filter
+  hosts: local
+  gather_facts: false
+  tasks:
+    - name: Read and display JSON
+      ansible.builtin.debug:
+        msg: "{{ lookup('file', 'address_ranges.json') | from_json }}"
+
+    # Note this will still work without 'from_json' due to Ansible parsing magic,
+    # but probably better to make it explicit.
+    - name: Read JSON in as structured data
+      ansible.builtin.set_fact:
+        address_ranges: "{{ lookup('file', 'address_ranges.json') | from_json }}"
+
+    - name: Display address ranges
+      ansible.builtin.debug:
+        msg: "{{ address_ranges.objects }}"

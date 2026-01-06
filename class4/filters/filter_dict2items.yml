@@ -1,0 +1,38 @@
+---
+- name: Testing a loop
+  hosts: gaia
+  gather_facts: false
+  vars:
+    network_devices:
+      fw1:
+        device_type: checkpoint_gaia
+        host: fw1.lasthop.io
+        username: pyclass
+        password: invalid
+      fw2:
+        device_type: checkpoint_gaia
+        host: fw2.lasthop.io
+        username: pyclass
+        password: invalid
+
+  tasks:
+    - name: Print Message
+      ansible.builtin.debug:
+        msg: |
+          "Name: {{ item.key }}"
+          "FQDN: {{ item.value.host }}"
+      loop: "{{ network_devices | dict2items }}"
+      #loop_control:
+      #  label: ' '
+
+# dict2items is a bit like this in Python
+# Create a list of new dictionaries
+#    result = []
+#    for k, v in my_dict.items():
+#        result.append({
+#            'key': k,
+#            'value': v
+#        })
+#    return result
+
+

@@ -1,0 +1,13 @@
+---
+- name: Configure address range
+  hosts: mgmt
+  gather_facts: false
+  tasks:
+    - name: Add address range0
+      check_point.mgmt.cp_mgmt_address_range:
+        color: "{{ my_color | default(omit) }}"
+        ip_address_first: 192.168.200.1
+        ip_address_last: 192.168.200.10
+        name: Test Address Range 0
+        state: present
+
