@@ -7,7 +7,18 @@ from ansible.module_utils.basic import AnsibleModule
 # Ignore self-signed certificate warnings (note, this is a security issue)
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-def chkpnt_login(base_url, endpoint, payload, session_id=None, ssl_verify=False):
+
+def chkpnt_login(base_url, user, password, ssl_verify=False):
+    """Login to the Mgmt API."""
+
+    endpoint = "login"
+
+    # Use "read-only" to avoid locking the database
+    login_payload = {"user": user, "password": password, "read-only": True}
+    response = chkpnt_api(base_url=base_url, endpoint=endpoint, payload=login_payload, ssl_verify=ssl_verify)
+    return response
+    # session_id = login_data.get("sid")
+
 
 def chkpnt_api(base_url, endpoint, payload, session_id=None, ssl_verify=False):
     """
@@ -44,25 +55,37 @@ def run_module():
     user = module.params["api_user"]
     password = module.params["api_password"]
 
-    # Login to the Mgmt API
-    # Use "read-only" to avoid locking the database
-    login_payload = {"user": user, "password": password, "read-only": True}
-    response = chkpnt_api(base_url=base_url, endpoint="login", payload=login_payload)
-    # session_id = login_data.get("sid")
+    #module.fail_json(msg="DEBUG DUMP", data=str(f"{user}\n{password}\n{base_url}"))
+    response = chkpnt_login(base_url=base_url, user=user, password=password)
+    # module.fail_json(msg="DEBUG DUMP", data=str(f"{response.json()}"))
 
     results = {
-        "changed": False,          # mandatory
-        "failed": False,           # optional
-        "msg": json.dumps(response)
-    #    "msg": response.json()
+        "changed": False,  # mandatory
+        "failed": False,  # optional
+        "msg": response.json()
     }
     # response = [user]
     # results["msg"] = response
+
+    #module.fail_json(msg="DEBUG DUMP", data=str(response))
+    # module.fail_json(msg="DEBUG DUMP", data=str('test'))
     module.exit_json(**results)
+
+
+def run_python():
+    mgmt_host = "chkpnt-pod1.lasthop.io"
+    user = "admin"
+    password = "INVALID"
+
+    base_url = f"https://{mgmt_host}/web_api"
+
+    response = chkpnt_login(base_url=base_url, user=user, password=password)
+    print(response)
 
 
 def main():
     run_module()
+    # run_python()
 
 
 if __name__ == "__main__":
