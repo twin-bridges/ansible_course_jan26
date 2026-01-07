@@ -136,8 +136,8 @@ def run_python():
 
 
 def main():
-    # run_module()
-    run_python()
+    run_module()
+    # run_python()
 
 
 if __name__ == "__main__":

@@ -10,3 +10,7 @@
         api_password: "{{ ansible_password }}"
       register: output
 
+    - name: Print results
+      ansible.builtin.debug:
+        var: output
+
