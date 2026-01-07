@@ -8,6 +8,13 @@ from ansible.module_utils.basic import AnsibleModule
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
+class CheckpointMgmtAuthError(Exception):
+    pass
+
+class CheckpointMgmtApiError(Exception):
+    pass
+
+
 def chkpnt_login(base_url, user, password, ssl_verify=False):
     """Login to the Mgmt API."""
 
@@ -15,9 +22,23 @@ def chkpnt_login(base_url, user, password, ssl_verify=False):
 
     # Use "read-only" to avoid locking the database
     login_payload = {"user": user, "password": password, "read-only": True}
-    response = chkpnt_api(base_url=base_url, endpoint=endpoint, payload=login_payload, ssl_verify=ssl_verify)
+    response = chkpnt_api(
+        base_url=base_url,
+        endpoint=endpoint,
+        payload=login_payload,
+        ssl_verify=ssl_verify,
+    )
+
+    # Auth failure
+    if response.status_code in [400, 401, 403, 404]:
+        msg = response.json()
+        raise CheckpointMgmtAuthError(msg)
+    # Something else went wrong.
+    elif not response.ok:
+        msg = response.json()
+        raise CheckpointMgmtApiError(msg)
+
     return response
-    # session_id = login_data.get("sid")
 
 
 def chkpnt_api(base_url, endpoint, payload, session_id=None, ssl_verify=False):
@@ -55,31 +76,32 @@ def run_module():
     user = module.params["api_user"]
     password = module.params["api_password"]
 
-    #module.fail_json(msg="DEBUG DUMP", data=str(f"{user}\n{password}\n{base_url}"))
-    response = chkpnt_login(base_url=base_url, user=user, password=password)
-    # module.fail_json(msg="DEBUG DUMP", data=str(f"{response.json()}"))
+    try:
+        response = chkpnt_login(base_url=base_url, user=user, password=password)
+    except CheckpointMgmtAuthError as e:
+        module.fail_json(msg="CheckPoint Authentication Failure", error_details=str(e))
+    except CheckpointMgmtApiError as e:
+        module.fail_json(msg="A CheckPoint API failure occurred during login", error_details=str(e))
 
     results = {
         "changed": False,  # mandatory
-        "failed": False,  # optional
-        "msg": response.json()
+        "failed": False,   # optional
+        "msg": response.json(),
     }
-    # response = [user]
-    # results["msg"] = response
-
-    #module.fail_json(msg="DEBUG DUMP", data=str(response))
-    # module.fail_json(msg="DEBUG DUMP", data=str('test'))
     module.exit_json(**results)
 
 
 def run_python():
     mgmt_host = "chkpnt-pod1.lasthop.io"
-    user = "admin"
+    user = "admin1"
     password = "INVALID"
 
     base_url = f"https://{mgmt_host}/web_api"
 
     response = chkpnt_login(base_url=base_url, user=user, password=password)
+    import pdb
+
+    pdb.set_trace()
     print(response)
 
 
