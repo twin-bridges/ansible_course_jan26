@@ -207,3 +207,4 @@ marimo/_lsp/
 __marimo__/
 
 *.swp
+class4/custom_module/test_args.json

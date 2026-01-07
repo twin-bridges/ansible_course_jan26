@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import requests
-import urllib3
 import json
+import urllib3
 from ansible.module_utils.basic import AnsibleModule
 
 # Ignore self-signed certificate warnings (note, this is a security issue)
@@ -79,6 +79,8 @@ def run_module():
 
     try:
         login_response = chkpnt_login(base_url=base_url, user=user, password=password)
+        # print(login_response)
+        # import pdb; pdb.set_trace()
     except CheckpointMgmtAuthError as e:
         module.fail_json(msg="CheckPoint Authentication Failure", error_details=str(e))
     except CheckpointMgmtApiError as e:
@@ -88,7 +90,7 @@ def run_module():
 
     session_id = login_response.json()["sid"]
 
-    #### Test API endpoint (could make a module argument)
+    # Test API endpoint (could make a module argument)
     endpoint = "show-networks"
 
     # 'limit' and 'offset' are used for pagination
@@ -108,36 +110,8 @@ def run_module():
     module.exit_json(**results)
 
 
-def run_python():
-    mgmt_host = "chkpnt-pod1.lasthop.io"
-    user = "admin"
-    password = "INVALID"
-
-    base_url = f"https://{mgmt_host}/web_api"
-
-    login_response = chkpnt_login(base_url=base_url, user=user, password=password)
-    session_id = login_response.json()["sid"]
-
-    # import pdb; pdb.set_trace()
-
-    #### Test API endpoint (could make a module argument)
-    endpoint = "show-networks"
-
-    # 'limit' and 'offset' are used for pagination
-    show_hosts_payload = {"offset": 0, "limit": 50, "details-level": "full"}
-    response = chkpnt_api(
-        base_url=base_url,
-        endpoint=endpoint,
-        payload=show_hosts_payload,
-        session_id=session_id,
-    )
-
-    print(response.json())
-
-
 def main():
     run_module()
-    # run_python()
 
 
 if __name__ == "__main__":
