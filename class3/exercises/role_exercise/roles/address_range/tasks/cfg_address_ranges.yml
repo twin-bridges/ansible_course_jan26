@@ -7,3 +7,4 @@
     name: "{{ item.name }}"
     state: present
   loop: "{{ address_range_test_ranges }}"
+  notify: FW Publish
