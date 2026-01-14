@@ -1,8 +1,8 @@
 1a. Create an "INI" style inventory file. This file should have an "all:vars" section containing variables for the following:
 
 ```
-# Replace 'your_user' with your lab username
-ansible_python_interpreter=/home/your_user/VENV/py3_venv/bin/python
+# Replace 'studentX' with your lab username
+ansible_python_interpreter=/home/studentX/VENV/py3_venv/bin/python
 ansible_user=admin
 ansible_password=invalid
 ```
@@ -12,7 +12,7 @@ Additionally, add the following three groups to the inventory file (currently, t
 ```
 local
 gaia
-checkpoint
+mgmt
 ```
 
 Use:
@@ -33,7 +33,7 @@ To validate and inspect your inventory file, your output should look similar to 
             "ungrouped",
             "local",
             "gaia",
-            "checkpoint"
+            "mgmt"
         ]
     }
 }
@@ -54,29 +54,31 @@ $ ansible-inventory --graph -i ./inventory_ex1b.ini
   |--@local:
   |  |--localhost
   |--@gaia:
-  |  |--lab_fw_gaia
-  |--@checkpoint:
-  |  |--lab_fw
+  |  |--lab_gaia
+  |--@mgmt:
+  |  |--lab_mgmt
 ```
 
-1c. Modify your inventory file to set the "ansible_network_os" for the gaia and checkpoint groups to:
+1c. Modify your inventory file to set the "ansible_network_os" for the gaia and mgmt groups to:
 
 ```bash
 ansible_network_os=check_point.gaia.checkpoint
 ansible_network_os=check_point.mgmt.checkpoint
 ```
 
-Additionally, set the "ansible_host" for each of these hosts to the FQDN of the device:
+This should be in ":vars" section for the given group.
+
+Execute the "ansible-inventory" command using the "lab_gaia" host, your output should look similar to the following:
 
 ```bash
-ansible_host=
- (i.e. cisco1.lasthop.io, arista1.lasthop.io, etc.). Use:
+$ ansible-inventory --host lab_gaia -i ./inventory_ex1c.ini 
+```
 
-
- 26 ansible_connection=httpapi
- 27 ansible_httpapi_use_ssl=True
- 28 ansible_httpapi_validate_certs=False
- 29 ansible_user=admin
-
-$ ansible-inventory --list -i ./inventory.ini 
-From this output, inspect the inventory and validate that the network_os has been set appropriately. Additionally, add "localhost" to be a member of the "local" group (you will need to set "ansible_connection=local" for the localhost entry).
+```json
+{
+    "ansible_network_os": "check_point.gaia.checkpoint",
+    "ansible_password": "bogus",
+    "ansible_python_interpreter": "/home/studentX/VENV/py3_venv/bin/python",
+    "ansible_user": "admin"
+}
+```
