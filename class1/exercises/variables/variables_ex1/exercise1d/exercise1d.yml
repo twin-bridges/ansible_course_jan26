@@ -1,6 +1,6 @@
 ---
-- name: Variables exercise 1c
-  hosts: pod3-gaia
+- name: Variables exercise 1d
+  hosts: pod99-gaia
   gather_facts: false
   vars_files: my_vars.yml
 

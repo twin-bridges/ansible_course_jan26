@@ -1,6 +1,6 @@
 ---
 - name: Variables exercise 1a
-  hosts: pod3-gaia
+  hosts: pod99-gaia
   gather_facts: false
 
   tasks:
