@@ -1,4 +1,4 @@
-1a. Create a list in YAML. Use the Python script "read_yaml.py" to read the YAML file and to verify your data structure.
+1a. Create a list in YAML (use the expanded YAML form, i.e. block-style). Use the Python script "read_yaml.py" to read the YAML file and to verify your data structure.
 
 ```bash
 # Example output
@@ -8,7 +8,7 @@ Enter YAML filename: yaml_ex1a.yml
 ['mun-fw1', 'mun-fw2', 'col-fw1', 'col-fw1']
 ```
 
-1b. Create a dictionary in YAML. Use the Python script "read_yaml.py" to read the YAML file and to verify your data structure.
+1b. Create a dictionary in YAML in block-style (expanded form). Use the Python script "read_yaml.py" to read the YAML file and to verify your data structure.
 
 ```bash
 # Example output
@@ -24,7 +24,7 @@ Enter YAML filename: yaml_ex1b.yml
 }
 ```
 
-1c. Repeat the dictionary except use the YAML compressed format for the dictionary. Once again use "read_yaml.py" to read the YAML file and to verify your data structure.
+1c. Repeat the dictionary except use the YAML compressed form for the dictionary (flow-style). Once again use "read_yaml.py" to read the YAML file and to verify your data structure.
 
 ```bash
 # Example output
