@@ -1,6 +1,6 @@
 ---
 - name: Add Smart Console and Ansible Host Objects
-  hosts: mgmt
+  hosts: pod99-mgmt
   gather_facts: false
   tasks:
     - check_point.mgmt.cp_mgmt_host:
@@ -17,7 +17,7 @@
 
     - check_point.mgmt.cp_mgmt_host:
         name: Ansible Server
-        ipv4_address: 13.56.234.189
+        ipv4_address: 3.125.34.232
         color: black
       notify: FW Publish
 

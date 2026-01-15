@@ -1,6 +1,6 @@
 ---
 - name: Deploy internal network objects
-  hosts: mgmt
+  hosts: pod99-mgmt
   gather_facts: false
   vars:
     network_name: "hq_net_129"
