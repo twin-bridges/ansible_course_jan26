@@ -1,0 +1,22 @@
+---
+- name: Inspect Routes
+  hosts: pod99-gaia
+  gather_facts: False
+  tasks:
+    - name: Inspect Routes
+      check_point.gaia.cp_gaia_routes_facts:
+      register: result
+
+    - name: Extract the route_table
+      ansible.builtin.set_fact:
+        route_table: "{{ result.ansible_facts.objects }}"
+
+    - ansible.builtin.set_fact:
+        prefix: "{{ route_table[0].address }}"
+        next_hop: "{{ route_table[0].next_hop.gateways }}"
+   
+    - ansible.builtin.debug:
+        msg: |
+          "Prefix: {{ prefix }}"
+          "Next Hop: {{ next_hop }}"
+
