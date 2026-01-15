@@ -1,6 +1,6 @@
 ---
 - name: Add static routes
-  hosts: gaia
+  hosts: pod99-gaia
   gather_facts: false
 
   vars:
