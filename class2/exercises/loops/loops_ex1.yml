@@ -1,6 +1,6 @@
 ---
-- name: Retrieve interface info
-  hosts: mgmt
+- name: Loops exercise1
+  hosts: localhost
   gather_facts: false
   vars:
     my_firewalls:
