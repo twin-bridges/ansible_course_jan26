@@ -1,0 +1,30 @@
+---
+- name: Exercise Network Objects
+  hosts: pod99-mgmt
+  gather_facts: false
+  vars:
+    cfg_networks:
+      - name: Voice Network
+        network: 10.200.10.0
+        mask: 24
+      - name: IT Mgmt
+        network: 10.200.11.0
+        mask: 24
+      - name: OOB Access Network
+        network: 198.51.100.0
+        mask: 26
+
+  tasks:
+    - name: Configure Network Objects
+      check_point.mgmt.cp_mgmt_network:
+        name: "{{ item.name }}"
+        subnet: "{{ item.network }}"
+        mask_length: "{{ item.mask }}"
+        color: navy blue
+        state: "present"
+      loop: "{{ cfg_networks }}"
+      notify: FW Publish
+
+  handlers:
+    - name: FW Publish
+      check_point.mgmt.cp_mgmt_publish:

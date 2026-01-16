@@ -1,6 +1,6 @@
 ---
 - name: Configure net objects with NAT
-  hosts: mgmt
+  hosts: pod99-mgmt
   gather_facts: false
   tasks:
     - check_point.mgmt.cp_mgmt_network:

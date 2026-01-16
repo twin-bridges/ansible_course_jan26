@@ -1,0 +1,29 @@
+---
+- name: Add host objects
+  hosts: pod99-mgmt
+  gather_facts: false
+  tasks:
+    - name: Config DMZ DB1 Server
+      check_point.mgmt.cp_mgmt_host:
+        name: DMZ DB1
+        ipv4_address: 172.31.144.241
+        color: dark gray
+      notify: FW Publish
+
+    - name: Config DMZ Email Server
+      check_point.mgmt.cp_mgmt_host:
+        name: DMZ Email
+        ipv4_address: 172.31.144.242
+        color: dark gray
+      notify: FW Publish
+
+    - name: Config DMZ Reporting Server
+      check_point.mgmt.cp_mgmt_host:
+        name: DMZ Reporting
+        ipv4_address: 172.31.144.243
+        color: dark gray
+      notify: FW Publish
+
+  handlers:
+    - name: FW Publish
+      check_point.mgmt.cp_mgmt_publish:
