@@ -2,7 +2,7 @@
 # Ansible management access needs enabled/allowed in the policy
 # before doing this.
 - name: Add DMZ Web Server Object and FW Policy
-  hosts: mgmt
+  hosts: pod99-mgmt
   gather_facts: false
   tasks:
     - name: Add Corp Web Server
