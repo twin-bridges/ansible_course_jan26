@@ -15,4 +15,4 @@ $ ansible-playbook fw_mgmt_policy.yml
 ```
 
 Verify mgmt and gaia access still works (you can do this by re-running a Gaia and Mgmt
-show playbook.
+show playbook).
