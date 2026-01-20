@@ -1,15 +1,12 @@
+### Mgmt Network Facts Exercise
 
-Use the cp_mgmt_network_facts module to retrieve Network Object facts (register the
-outptu from this module).
+Use the cp_mgmt_network_facts module to retrieve network object facts (register the output from this module).
 
-Process the registered output from this module and extract the default office address
-pool. You can assume this is the first object in the returned list of network objects.
+Process the registered output from this module and extract the default office address pool. You can assume this is the first object in the returned list of network objects.
 
-From this office address pool use the set_fact module to extract the "name", "subnet4",
-and "subnet-mask" field.
+From this office address pool use the set_fact module to extract the "name", "subnet4", and "subnet-mask" field.
 
-Use the debug module to print out these three variables (name, network/netmask). Your
-output should look similar to the following.
+Use the debug module to print out these three variables (name, network/netmask). Your output should look similar to the following.
 
 ```bash
 $ ansible-playbook ex_mgmt_net_objects.yml --limit pod1-mgmt
