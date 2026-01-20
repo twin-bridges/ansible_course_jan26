@@ -1,3 +1,4 @@
+### Include / Import Exercise 2
 
 ### Part a
 
@@ -5,7 +6,7 @@ Convert 'includes_imports1, part a' over to use "import_tasks" instead of "inclu
 
 ### Part b
 
-Try to convert 'includes_imports1, part b' over to use "import_tasks" instead of "include_tasks" while using a variable from inventory. 
+Try to convert 'includes_imports1, part b' over to use "import_tasks" instead of "include_tasks" while using a variable from host_vars. 
 
 Will you be able to do this? Why not? 
 
