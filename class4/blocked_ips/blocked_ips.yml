@@ -1,0 +1,57 @@
+- name: Dynamically update blocked IPs
+  hosts: mgmt
+  gather_facts: false
+  vars:
+    blocklist_file: "./blocked_ips.txt"
+    group_name: "Block_IP_Addresses"
+
+  tasks:
+    - name: Read the blocklist file
+      ansible.builtin.set_fact:
+        blocked_ips: "{{ lookup('file', blocklist_file).splitlines() }}"
+
+    - name: "Retrieve the current members of the group: {{ group_name }}"
+      check_point.mgmt.cp_mgmt_group_facts:
+        name: "{{ group_name }}"
+        details_level: "full"
+      register: current_blocked_group
+      ignore_errors: true
+
+    - name: Extract current members
+      ansible.builtin.set_fact:
+        current_ips: "{{ current_blocked_group.ansible_facts.group.members | map(attribute='name') | list }}"
+      when: current_blocked_group.ansible_facts is defined
+
+    - name: Identify IP addresses that need removed
+      ansible.builtin.set_fact:
+        ips_to_remove: "{{ current_ips | difference(blocked_ips) }}"
+      when: current_ips is defined
+
+    - name: Display IP addresses to remove
+      ansible.builtin.debug:
+        var: ips_to_remove
+
+    - name: Create host objects for new blocked IP addresses
+      check_point.mgmt.cp_mgmt_host:
+        name: "{{ item }}"
+        ip_address: "{{ item }}"
+        state: present
+      loop: "{{ blocked_ips }}"
+      notify: Publish Changes
+
+    - name: Update the blocked IP group membership
+      check_point.mgmt.cp_mgmt_group:
+        name: "{{ group_name }}"
+        members: "{{ blocked_ips }}"
+        state: present
+      notify: Publish Changes
+
+    - name: Remove old host objects
+      check_point.mgmt.cp_mgmt_host:
+        name: "{{ item }}"
+        state: absent
+      loop: "{{ ips_to_remove | default([]) }}"
+
+  handlers:
+    - name: Publish Changes
+      check_point.mgmt.cp_mgmt_publish:
