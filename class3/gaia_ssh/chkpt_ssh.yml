@@ -6,8 +6,8 @@
   gather_facts: false
   tasks:
     - name: Execute simple command
-      # ansible.builtin.command: ls -al
-      ansible.builtin.shell: ls -al
+      ansible.builtin.command: ls -al
+      # ansible.builtin.shell: ls -al
       changed_when: false
       register: output
 
