@@ -1,5 +1,5 @@
 ---
-- name: Debugging part a (here there be errors).
+- name: Debugging part b (here there be errors).
   hosts: mgmt
   gather_facts: false
   tasks:
