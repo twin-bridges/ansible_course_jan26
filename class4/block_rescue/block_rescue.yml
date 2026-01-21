@@ -1,0 +1,30 @@
+---
+- name: Testing
+  hosts: pod99-mgmt
+  gather_facts: false
+  tasks:
+    - block:
+        - name: Create Server2
+          check_point.mgmt.cp_mgmt_host:
+            name: "My Server2"
+            ip_address: "10.220.10.12"
+
+        - name: Create Server3
+          check_point.mgmt.cp_mgmt_host:
+            name: "My Server3"
+            ip_address: "10.220.10.13"
+
+        - name: Create a failure
+          ansible.builtin.shell: /bin/false
+
+        - name: Create Server4
+          check_point.mgmt.cp_mgmt_host:
+            name: "My Server4"
+            ip_address: "10.220.10.14"
+
+        - name: Publish
+          check_point.mgmt.cp_mgmt_publish:
+
+      rescue:
+        - name: Discard session
+          check_point.mgmt.cp_mgmt_discard:
