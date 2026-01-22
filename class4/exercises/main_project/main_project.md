@@ -6,6 +6,7 @@ You should use roles for this exercise.
 * You should use a shared role for handlers (which would be a required dependency for your other roles in meta/main.yml).
 
 ### Gaia Configuration
+* The Gaia Configuration role (tasks/main.yml) should use either import_tasks or include_tasks to include/import static_routes.yml and dns.yml (for the static route configuration and DNS configuration specified below).
 * Configure a static route for 172.31.128.0/21, interface "eth1", next hop 172.31.128.1
 * Configure the following DNS Settings:
   * DNS1: "172.31.0.2"
@@ -35,9 +36,11 @@ Network Objects (with NAT auto hide behind the gateway)
 DMZ Object (additional Host Object)
 * Corp Web Server, 172.31.144.220
 
+Once again you should use import_tasks/include_tasks from your main.yml file to import/include the mgmt host object, the network objects, and the DMZ objects.
+
 ### FW Policy Configuration
 
-First configure management access from the Ansible Server and SmartConsole to not lock us out (from the Ansible Server).
+First configure management access from the Ansible Server and SmartConsole to not lock yourself out from the Ansible Server.
 
 Allow "Any" access to the firewall/mgmt server itself from the following:
 * Ansible Server
@@ -48,7 +51,9 @@ Also allow "Any", SSH access to the firewall itself (so we can SSH directly into
 
 Publish and Install your changes.
 
-Configure HTTP/HTTPS access from Any source to "Corp Web Server" on the DMZ. Publish and Install your changes.
+Second, configure HTTP/HTTPS access from Any source to "Corp Web Server" on the DMZ. Publish and Install your changes.
+
+I recommend you separate the Mgmt Policy and the DMZ Policy into two separate task files that you import/include from tasks/main.yml
 
 ### Try to ensure that your entire playbook (all your roles) are idempotent.
 
