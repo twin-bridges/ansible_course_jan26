@@ -54,7 +54,7 @@ Configure HTTP/HTTPS access from Any source to "Corp Web Server" on the DMZ. Pub
 
 Note, in order to make the 'clish -c "set domainname lasthop.io"' task idempotent, you will need to:
 1. First retrieve the current configuration.
-2. Add logic to your 'cp_gaia_run_script / set domainname' operation whereby the script execution only happens if the domain has not currently been configured.
+2. Add logic to your 'cp_gaia_run_script / set domainname' task whereby the script execution only happens if the domainname of 'lasthop.io' has not been configured.
 
 ### Bonus / Optional
 Create a separate role named 'script_b64_decode' that takes the output of the 'cp_mgmt_run_script' module execution and parses this output and returns the decoded responseMessage.
