@@ -23,5 +23,5 @@
 - name: Configure domainname
   check_point.gaia.cp_gaia_run_script:
     script: clish -c "set domainname {{ gaia_build_dns_domain }}"
-  when: "'xlasthop.io' not in gaia_build_domain_name"
+  when: "'lasthop.io' not in gaia_build_domain_name"
   notify: Gaia Save Config
