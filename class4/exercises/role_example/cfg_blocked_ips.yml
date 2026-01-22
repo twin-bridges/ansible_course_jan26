@@ -1,0 +1,8 @@
+---
+- name: Configure blocked IPs using role
+  hosts: pod99-mgmt
+  gather_facts: false
+  tasks:
+    - name: Configure blocked IPs
+      ansible.builtin.import_role:
+        name: blocked_ips

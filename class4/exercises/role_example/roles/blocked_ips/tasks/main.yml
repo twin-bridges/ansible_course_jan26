@@ -1,0 +1,14 @@
+- name: Create host objects for blocked IP addresses
+  check_point.mgmt.cp_mgmt_host:
+    name: "{{ item }}"
+    ip_address: "{{ item }}"
+    state: present
+  loop: "{{ blocked_ips_cfg }}"
+  notify: Publish Changes
+
+- name: Config the blocked IP group membership
+  check_point.mgmt.cp_mgmt_group:
+    name: Blocked IPs
+    members: "{{ blocked_ips_cfg }}"
+    state: present
+  notify: Publish Changes
