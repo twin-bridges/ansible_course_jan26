@@ -38,7 +38,7 @@ DMZ Object (additional Host Object)
 
 First configure management access from the Ansible Server and SmartConsole to not lock us out (from the Ansible Server).
 
-Allow "Any" access from the following to the firewall/mgmt server itself:
+Allow "Any" access to the firewall/mgmt server itself from the following:
 * Ansible Server
 * Windows SmartConsole
 * Windows SmartConsole Public
