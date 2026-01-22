@@ -10,7 +10,7 @@ mgmt_objects_hq_nets:
 
 mgmt_objects_ansible_server:
   name: Ansible Server
-  ipv4_address: 13.56.234.189
+  ipv4_address: 3.125.34.232
 
 mgmt_objects_smart_console:
   name: Windows SmartConsole
