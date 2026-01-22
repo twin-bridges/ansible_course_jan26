@@ -20,3 +20,7 @@
       vars:
         # Pass the required variable into the role
         script_b64_decode_input: "{{ response }}"
+
+    - name: Display the decode responseMessage
+      ansible.builtin.debug:
+        var: script_b64_decode_rm

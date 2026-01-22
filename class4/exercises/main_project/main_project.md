@@ -12,6 +12,7 @@ You should use roles for this exercise.
   * DNS2: "8.8.8.8"
   * DNS3: "8.8.4.4"
   * DNS Domain: lasthop.io
+* Configure the DNS domainname using 'clish -c "set domainname lasthop.io"' and the 'cp_gaia_run_script' module.
 
 Notes: try to ensure you decouple your tasks from your data. In other words, the specifics of the static route and of the DNS settings should be stored as role variables (and not directly hard-coded in the tasks).
 
@@ -50,4 +51,28 @@ Publish and Install your changes.
 Configure HTTP/HTTPS access from Any source to "Corp Web Server" on the DMZ. Publish and Install your changes.
 
 ### Try to ensure that your entire playbook (all your roles) are idempotent.
+
+Note, in order to make the 'clish -c "set domainname lasthop.io"' task idempotent, you will need to:
+1. First retrieve the current configuration.
+2. Add logic to your 'cp_gaia_run_script / set domainname' operation whereby the script execution only happens if the domain has not currently been configured.
+
+### Bonus / Optional
+Create a separate role named 'script_b64_decode' that takes the output of the 'cp_mgmt_run_script' module execution and parses this output and returns the decoded responseMessage.
+
+Execution of this role should look similar to the following:
+
+```yaml
+- name: Use 'script_b64_decode' role to extract responseMessage
+  ansible.builtin.include_role:
+    name: script_b64_decode
+  vars:
+    # Pass the required variable into the role
+    script_b64_decode_input: "{{ response }}"
+
+    - name: Display the decode responseMessage
+      ansible.builtin.debug:
+        var: script_b64_decode_rm
+```
+
+The above 'response' variable is the reponse from a 'cp_mgmt_run_script' execution. The 'script_b64_decode_rm' is set in the role and is the decoded responseMessage.
 
