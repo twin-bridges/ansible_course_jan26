@@ -49,5 +49,5 @@ Publish and Install your changes.
 
 Configure HTTP/HTTPS access from Any source to "Corp Web Server" on the DMZ. Publish and Install your changes.
 
-### Try to make all of the above Idempotent (ensure that you did this).
+### Try to ensure that your entire playbook (all your roles) are idempotent.
 
