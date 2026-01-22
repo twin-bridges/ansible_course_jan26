@@ -18,13 +18,13 @@
       ansible.builtin.set_fact:
         intf_attrs: "{{ intf_out.ansible_facts.interface }}"
 
-    - name: Save intf_attrs
+    - name: Save IP addr and mask
       ansible.builtin.set_fact:
-        ip_addr: intf_attrs['ipv4-address']
-        mask: intf_attrs['ipv4-mask-length']
+        ip_addr: "{{ intf_attrs['ipv4-address'] }}"
+        mask: "{{ intf_attrs['ipv4-mask-length'] }}"
 
     - name: Display interface IP
       ansible.builtin.debug:
         msg: |
-          Name: {{ intf_attrs.name }}
+          Name: {{ intf_name }}
           IP Address: {{ ip_addr }}/{{ mask }}

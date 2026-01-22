@@ -18,9 +18,5 @@ Loop over the returned gateways and search for the gateway whose 'name' matches 
 
 Now back in your main playbook execute the 'cp_mgmt_interface_facts' using the 'gw_uid' variable and save the result.
 
-From this returned 
+From this returned result extract the IP address and mask of the interface and print them out to the screen.
 
-
-    - name: Interface output
-      ansible.builtin.debug:
-        msg: "{{ intf_out }}"

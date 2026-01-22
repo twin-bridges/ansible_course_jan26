@@ -13,3 +13,7 @@
   loop_control:
     label: " "
   when: item['name'] == fw_name
+
+- name: Display gw_uid
+  ansible.builtin.debug:
+    var: gw_uid
