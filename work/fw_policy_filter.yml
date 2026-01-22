@@ -1,0 +1,36 @@
+---
+- hosts: mgmt
+  gather_facts: false
+  tasks:
+    - name: show-access-rulebase
+      check_point.mgmt.cp_mgmt_access_rule_facts:
+        name: Network
+        details_level: standard
+        use_object_dictionary: true
+        limit: 20
+        offset: 0
+      register: policy
+
+    - name: Objects Dictionary
+      ansible.builtin.set_fact:
+        objects_list: "{{ policy.ansible_facts['access-rulebase']['objects-dictionary'] }}"
+
+    - name: Rulebase
+      ansible.builtin.set_fact:
+        rulebase: "{{ policy.ansible_facts['access-rulebase'].rulebase }}"
+
+    - debug:
+        var: objects_list
+
+    - name: Simplify Objection Dictionary
+      ansible.builtin.set_fact:
+        objects_dict: "{{ objects_list | extract_obj_names }}"
+ 
+    - debug:
+        var: objects_dict
+
+    - name: Write data structure out to file system
+      ansible.builtin.copy:
+        content: "{{ objects_dict | to_json }}"
+        dest: "fw_objects.json"
+      delegate_to: localhost
