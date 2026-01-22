@@ -1,6 +1,6 @@
 ---
 - name: Gaia Tasks (DNS and Routes)
-  hosts: gaia
+  hosts: pod99-gaia
   gather_facts: false
   tasks:
     - name: Gaia Tasks (DNS and Routes)
@@ -9,7 +9,7 @@
   tags: gaia_tasks
 
 - name: Mgmt Tasks (Objects and Policy)
-  hosts: mgmt
+  hosts: pod99-mgmt
   gather_facts: false
   tasks:
     - name: Network Objects
