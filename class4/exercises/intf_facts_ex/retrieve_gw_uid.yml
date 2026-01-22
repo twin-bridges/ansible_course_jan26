@@ -1,0 +1,15 @@
+- name: Retrieve Gateway Information
+  check_point.mgmt.cp_mgmt_show_gateways_and_servers:
+  register: gw_info
+
+- name: Extract gateway list
+  ansible.builtin.set_fact:
+    gateways: "{{ gw_info['show-gateways-and-servers']['objects'] }}"
+
+- name: Retrieve gw_uid
+  ansible.builtin.set_fact:
+    gw_uid: "{{ item.uid }}"
+  loop: "{{ gateways }}"
+  loop_control:
+    label: " "
+  when: item['name'] == fw_name

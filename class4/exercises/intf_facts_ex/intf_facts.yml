@@ -1,0 +1,30 @@
+---
+- name: Intf facts
+  hosts: pod99-mgmt
+  gather_facts: false
+  vars:
+    intf_name: eth0
+  tasks:
+    - name: Extract the GW uid
+      ansible.builtin.import_tasks: retrieve_gw_uid.yml
+
+    - name: Show interface
+      check_point.mgmt.cp_mgmt_interface_facts:
+        name: "{{ intf_name }}"
+        gateway_uid: "{{ gw_uid }}"
+      register: intf_out
+
+    - name: Save intf_attrs
+      ansible.builtin.set_fact:
+        intf_attrs: "{{ intf_out.ansible_facts.interface }}"
+
+    - name: Save intf_attrs
+      ansible.builtin.set_fact:
+        ip_addr: intf_attrs['ipv4-address']
+        mask: intf_attrs['ipv4-mask-length']
+
+    - name: Display interface IP
+      ansible.builtin.debug:
+        msg: |
+          Name: {{ intf_attrs.name }}
+          IP Address: {{ ip_addr }}/{{ mask }}
