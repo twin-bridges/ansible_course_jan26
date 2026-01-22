@@ -22,6 +22,9 @@
         current_ips: "{{ current_blocked_group.ansible_facts.group.members | map(attribute='name') | list }}"
       when: current_blocked_group.ansible_facts is defined
 
+    - debug:
+        var: current_ips
+
     - name: Identify IP addresses that need removed
       ansible.builtin.set_fact:
         ips_to_remove: "{{ current_ips | difference(blocked_ips) }}"
