@@ -1,0 +1,28 @@
+# Takes in 'cp_mgmt_run_script' command output using
+# 'script_b64_decode_input' variable.
+#
+# Returns b64decoded responseMessage as 'script_b64_decode_input'
+- name: Ensure mandatory variable was provided
+  ansible.builtin.assert:
+    that:
+      - script_b64_decode_input is defined
+    fail_msg: "'script_b64_decode_input' variable is required to use this role. This should be result of the execution of 'cp_mgmt_run_script'"
+
+- name: Extract 'run-script' field
+  ansible.builtin.set_fact:
+    script_b64_decode_run_script: "{{ script_b64_decode_input['run-script'] }}"
+
+- name: "Skip over the uid key (only retain the 'value') and extract tasks[0]"
+  ansible.builtin.set_fact:
+    script_b64_decode_tasks: "{{ item.value.tasks[0] }}"
+  loop: "{{ script_b64_decode_run_script | dict2items }}"
+  loop_control:
+    label: " "
+
+- name: Extract responseMessage field
+  ansible.builtin.set_fact:
+    script_b64_decode_rm: "{{ script_b64_decode_tasks['task-details'][0].responseMessage | b64decode }}"
+
+- name: Display responseMessage
+  ansible.builtin.debug:
+    msg: "{{ script_b64_decode_rm }}"

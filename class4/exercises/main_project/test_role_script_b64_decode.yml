@@ -1,0 +1,22 @@
+---
+- name: Test mgmt script
+  hosts: pod99-mgmt
+  gather_facts: false
+  vars:
+    command: 'clish -c "show configuration" | grep domain'
+  tasks:
+    - name: Execute command
+      check_point.mgmt.cp_mgmt_run_script:
+        script: "{{ command }}"
+        script_name: "Execute show configuration script"
+        targets:
+          - "{{ fw_name }}"
+      changed_when: false
+      register: response
+
+    - name: Use 'script_b64_decode' role to extract responseMessage
+      ansible.builtin.include_role:
+        name: script_b64_decode
+      vars:
+        # Pass the required variable into the role
+        script_b64_decode_input: "{{ response }}"
