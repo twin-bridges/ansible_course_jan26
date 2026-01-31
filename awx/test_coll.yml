@@ -10,3 +10,13 @@
     - name: Show installed collections
       ansible.builtin.debug:
         var: collection_list.stdout_lines
+
+- name: Gaia checks
+  hosts: gaia
+  gather_facts: no
+  tasks:
+    - name: Show installed collections
+      ansible.builtin.debug:
+        msg: |
+          {{ ansible_host }}
+          {{ ansible_network_os }}
