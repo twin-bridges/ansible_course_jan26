@@ -1,0 +1,11 @@
+---
+- name: Check Ansible Version
+  hosts: localhost
+  gather_facts: yes
+  tasks:
+    - name: Display Ansible Version Info
+      ansible.builtin.debug:
+        msg: 
+          - "Ansible Version: {{ ansible_version.full }}"
+          - "Core Version: {{ ansible_version.string }}"
+          - "Python Version: {{ ansible_python_version }}"
