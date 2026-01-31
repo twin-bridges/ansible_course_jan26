@@ -19,4 +19,3 @@
       ansible.builtin.debug:
         msg: |
           {{ ansible_host }}
-          {{ ansible_network_os }}
