@@ -15,7 +15,14 @@
   hosts: gaia
   gather_facts: no
   tasks:
-    - name: Show installed collections
+    - name: Gaia tests
       ansible.builtin.debug:
         msg: |
           {{ ansible_host }}
+
+    - name: Show Version
+      check_point.gaia.cp_gaia_version_facts:
+      register: result
+
+    - ansible.builtin.debug:
+        var: result
