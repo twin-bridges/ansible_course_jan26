@@ -14,8 +14,8 @@
 - name: Gaia checks
   hosts: gaia
   gather_facts: no
-  vars:
-    ansible_network_os: check_point.gaia.checkpoint
+  # vars:
+  #   ansible_network_os: check_point.gaia.checkpoint
   tasks:
     - name: Gaia tests
       ansible.builtin.debug:
