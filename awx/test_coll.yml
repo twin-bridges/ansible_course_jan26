@@ -3,18 +3,6 @@
   hosts: localhost
   gather_facts: no
   tasks:
-    - name: Ensure /etc/ansible exists
-      ansible.builtin.file:
-        path: /etc/ansible
-        state: directory
-        mode: '0755'
-
-    - name: Create the empty hosts file
-      ansible.builtin.file:
-        path: /etc/ansible/hosts
-        state: touch
-        mode: '0644'
-
     - name: Try to find the Gaia collection on disk
       ansible.builtin.shell: "ansible-galaxy collection list"
       register: collection_list
